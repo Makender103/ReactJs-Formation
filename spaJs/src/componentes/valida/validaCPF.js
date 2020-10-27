@@ -1,3 +1,4 @@
+
 function verificaCPFInvalidos(cpf){
     const cpfsInvalidos = [
         "11111111111",
@@ -62,3 +63,5 @@ function validaCPF(cpf){
         verificaCPFInvalidos(cpf)
     )
 }
+
+export default validaCPF
