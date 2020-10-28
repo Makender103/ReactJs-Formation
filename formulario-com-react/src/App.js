@@ -4,19 +4,14 @@ import './App.css';
 
 import FormularioCadastro from "./components/FormularioCadastro/FormularioCadastro";
 
+
 function App() {
 
   const aoEnviarForm=(dados)=> {
     console.table(dados)
   }
 
-  const validarCPF=(cpf)=> {
-    if (cpf.length  !==11) {
-      return {valido: false, texto: "cpf deve ter 11 digitos"}
-    }else {
-      return {valido: true, texto: ""}
-    }
-  }
+
   
   return (
     <Container component="article" maxWidth="sm">

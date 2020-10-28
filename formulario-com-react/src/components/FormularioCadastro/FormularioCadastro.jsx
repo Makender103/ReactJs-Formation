@@ -1,87 +1,37 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
+import DadosEntrega from './DadosEntrega';
+import DadosPessoais from './DadosPessoais';
+import DadosUsuarios from './DadosUsuarios';
 
-import Button from '@material-ui/core/Button'
-import { FormControlLabel, Switch, TextField } from '@material-ui/core';
 
 const FormularioCadastro =({aoEnviar, validarCPF})=>{
-    const [nome, setNome] = useState("");
-    const [sobrenome, setSobrenome] = useState("");
-    const [CPF, setCPF] = useState("");
-    const [promocoes, setPromocoes] = useState(true);
-    const [novidades, setNovidades] = useState(false);
 
-    const [erros, setErros] = useState({cpf: {valido: true, texto: ""}})
+  const [etapaAtual, setEtapaAtual] = useState(0);
+  const [dadosColetados, setDadoColetados] = useState({})
 
-    const handleErro=(event)=>{
-        const ehvalido = validarCPF(CPF)
-        setErros({cpf: ehvalido})
-    }
+  useEffect(() => {
+    console.log(dadosColetados)
 
-    const handleSubmit =(event)=> {
-        event.preventDefault()
-        aoEnviar({nome, sobrenome, CPF, novidades, promocoes})
-    }
-    return (
-        <form onSubmit={handleSubmit}>
-            <TextField
-                value={nome}
-                id="nome" 
-                label="Nome" 
-                variant="outlined" 
-                margin="normal" 
-                fullWidth
-                onChange={event=>setNome(event.target.value)}
-            />
+  })
 
-            <TextField
-            
-                value={sobrenome}
-                id="SobreNome" 
-                variant="outlined" 
-                margin="normal" 
-                label="SobreNome"
-                fullWidth
-                onChange={event=>setSobrenome(event.target.value)}
+  const formularios =[
+    <DadosUsuarios aoEnviar={coletarDados}/>,
+    <DadosPessoais aoEnviar={coletarDados} validarCPF={validarCPF}/>,
+    <DadosEntrega aoEnviar={coletarDados} />
+  ];
 
-            />
+  function coletarDados(dados) {
+    setDadoColetados({...dadosColetados, ...dados})
+    proximo();
+  }
+  function proximo() {
+    setEtapaAtual(etapaAtual+1)
+  }
 
-            <TextField
-            onBlur={handleErro}
-                value={CPF}
-                error={!erros.cpf.valido}
-                helperText={erros.cpf.texto}
-                id="CPF"
-                label="CPF"
-                margin="normal"
-                variant="outlined"
-                fullWidth
-                onChange={event=>setCPF(event.target.value)}
-            />
-
-
-            <FormControlLabel label="promoçoes" control={<Switch
-                checked={promocoes}
-                name="promocoes"
-                color="primary"
-                onChange={event=> setPromocoes(event.target.checked)}
-                />} 
-            />
-            <FormControlLabel label="novidades" control={<Switch 
-                checked={novidades}
-                name="novidades"
-                color="primary"
-                onChange={event=> setNovidades(event.target.checked)}
-                />}
-            />
-        
-            <Button
-                variant="contained"
-                color="primary"
-                type="submit"
-            >
-                Sign Up
-            </Button>
-        </form>
-    )
+  return (
+    <>
+      {formularios[etapaAtual]}
+    </>
+  )
 }
 export default FormularioCadastro;
