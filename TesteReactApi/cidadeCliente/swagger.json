@@ -1,0 +1,302 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "version": "1.0.0",
+    "title": "crudCidadeCliente",
+    "description": "CRUD de cidades e clientes",
+    "termsOfService": "localhost:8080/termoUso",
+    "contact": {
+      "name": "Suporte",
+      "url": "localhost:8080/suporte",
+      "email": "suporte@suporte"
+    }
+  },
+  "host": "localhost:8080",
+  "basePath": "/",
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "schemes": [
+    "http"
+  ],
+  "tags": [
+    {
+      "name": "Cidade"
+    },
+    {
+      "name": "Cliente"
+    }
+  ],
+  "paths": {
+    "/cidades": {
+      "post": {
+        "tags": [
+          "Cidade"
+        ],
+        "summary": "Cadastra cidade",
+        "description": "Cadastra uma nova cidade",
+        "operationId": "cadastrarCidade",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "cidade",
+            "schema": {
+              "$ref": "#/definitions/Cidade"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/Cidade"
+            }
+          }
+        }
+      }
+    },
+    "/cidades/{nome}": {
+      "get": {
+        "tags": [
+          "Cidade"
+        ],
+        "summary": "busca cidade pelo nome",
+        "description": "Busca a cidade pelo nome passado por parâmetro",
+        "operationId": "cidadesPorNome",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "nome",
+            "type": "string",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/Cidade"
+            }
+          }
+        }
+      }
+    },
+    "/cidades/estados/{estado}": {
+      "get": {
+        "tags": [
+          "Cidade"
+        ],
+        "summary": "busca cidades pelo estado",
+        "description": "Busca a lista de cidades pelo nome do estado passado por parâmetro",
+        "operationId": "cidadesPorEstado",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "estado",
+            "type": "string",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Cidade"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/clientes": {
+      "post": {
+        "tags": [
+          "Cliente"
+        ],
+        "summary": "Cadastra cliente",
+        "description": "Cadastra um novo cliente",
+        "operationId": "cadastrarCliente",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "cliente",
+            "schema": {
+              "$ref": "#/definitions/Cliente"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/Cliente"
+            }
+          }
+        }
+      }
+    },
+    "/clientes/{id}": {
+      "get": {
+        "tags": [
+          "Cliente"
+        ],
+        "summary": "busca cliente pelo id",
+        "description": "Busca o cliente pelo id passado por parâmetro",
+        "operationId": "clientePorId",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "type": "integer",
+            "format": "int64",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/Cliente"
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Cliente"
+        ],
+        "summary": "busca cliente pelo id",
+        "description": "Busca o cliente pelo id passado por parâmetro",
+        "operationId": "removerCliente",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "type": "integer",
+            "format": "int64",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/clientes/nomes": {
+      "get": {
+        "tags": [
+          "Cliente"
+        ],
+        "summary": "busca cliente pelo nome",
+        "description": "Busca o cliente pelo nome passadRo na query",
+        "operationId": "clientePorNome",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "nome",
+            "type": "string",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/Cliente"
+            }
+          }
+        }
+      }
+    },
+    "/clientes/{id}/alterarNome": {
+      "patch": {
+        "tags": [
+          "Cliente"
+        ],
+        "summary": "altera o nome do cliente",
+        "description": "altera o nome do cliente que tem o id passado por parametro",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "cliente",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "nome": {
+                  "type": "string",
+                  "example": "Novonome"
+                }
+              }
+            }
+          },
+          {
+            "in": "path",
+            "name": "id",
+            "type": "integer",
+            "format": "int64",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/Cliente"
+            }
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "Cidade": {
+      "type": "object",
+      "properties": {
+        "nome": {
+          "type": "string",
+          "example": "Chapecó"
+        },
+        "estado": {
+          "type": "string",
+          "example": "SC"
+        }
+      }
+    },
+    "Cliente": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer",
+          "format": "int64",
+          "example": 123
+        },
+        "nome": {
+          "type": "string",
+          "example": "Fulano"
+        },
+        "sexo": {
+          "type": "string",
+          "example": "M"
+        },
+        "dataDeNascimento": {
+          "type": "string",
+          "example": "2020-10-30"
+        },
+        "idade": {
+          "type": "integer",
+          "example": 20
+        },
+        "cidade": {
+          "$ref": "#/definitions/Cidade"
+        }
+      }
+    }
+  }
+}
